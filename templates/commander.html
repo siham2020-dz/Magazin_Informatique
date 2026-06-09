@@ -13,9 +13,9 @@
         <label>Choisir un produit :</label>
         <select name="id_produit" required>
             {% for produit in produits %}
-                <option value="{{ produit[0] }}">
-                    {{ produit[1] }} - {{ produit[2] }} €
-                </option>
+                <option value="{{ produit.id }}">
+    {{ produit.nom }} - {{ produit.prix }} €
+</option>
             {% endfor %}
         </select>
 
