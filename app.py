@@ -5,14 +5,16 @@ from datetime import date
 app = Flask(__name__)
 
 # Connexion BDD
-db = mysql.connector.connect(
-    host="127.0.0.1",
-    port=3306,
-    user="root",
-    password="",   # mets "root" ici si ton mot de passe MySQL est root
-    database="magasin_informatique"
-)
+import mysql.connector
 
+def get_db():
+    return mysql.connector.connect(
+        host="127.0.0.1",
+        port=3306,
+        user="root",
+        password="",
+        database="magasin_informatique"
+    )
 # ACCUEIL
 @app.route("/")
 def accueil():
@@ -25,7 +27,7 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-
+        db = get_db()         
         cursor = db.cursor(dictionary=True, buffered=True)
 
         # ADMIN
@@ -50,6 +52,7 @@ def login():
 # PAGE CLIENT
 @app.route("/client/<int:id_client>")
 def client(id_client):
+    db = get_db()
     cursor = db.cursor(dictionary=True, buffered=True)
 
     cursor.execute("""
@@ -68,6 +71,7 @@ def client(id_client):
 # PAGE ADMIN
 @app.route("/admin")
 def admin():
+    db = get_db()
     cursor = db.cursor(dictionary=True, buffered=True)
 
     cursor.execute("SELECT * FROM produits")
@@ -94,6 +98,7 @@ def admin():
 # PAGE COMMANDER
 @app.route("/client/<int:id_client>/commander", methods=["GET", "POST"])
 def commander(id_client):
+    db = get_db()
     cursor = db.cursor(dictionary=True, buffered=True)
 
     if request.method == "POST":
