@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription Client</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="center-form">
+
+    <div class="inscription-box">
+
+        <h2>Inscription client</h2>
+
+        <form method="POST">
+
+            <label>Nom :</label>
+            <input type="text" name="nom" required>
+
+            <label>Prénom :</label>
+            <input type="text" name="prenom" required>
+
+            <label>Email :</label>
+            <input type="email" name="email" required>
+
+            <label>Mot de passe :</label>
+            <input type="password" name="password" required>
+
+            <label>Adresse :</label>
+            <input type="text" name="adresse">
+
+           
+
+            <button type="submit">S'inscrire</button>
+
+        </form>
+
+        <a href="/login">Déjà un compte ? Connexion</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

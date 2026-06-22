@@ -10,6 +10,9 @@
 
 <table border="1">
     <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Password</th>
         <th>Produit</th>
         <th>Prix</th>
         <th>Quantité</th>
@@ -17,6 +20,7 @@
 
     {% for p in produits %}
     <tr>
+        <td>{{ p.nom }}</td>
         <td>{{ p.nom }}</td>
         <td>{{ p.prix }}</td>
         <td>{{ p.quantite }}</td>

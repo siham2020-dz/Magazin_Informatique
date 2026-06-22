@@ -94,7 +94,31 @@ def admin():
         commandes=commandes
     )
 
+@app.route("/inscription", methods=["GET", "POST"])
+def inscription():
+    if request.method == "POST":
+        nom = request.form["nom"]
+        prenom = request.form["prenom"]
+        email = request.form["email"]
+        password = request.form["password"]
+        adresse = request.form["adresse"]
+        
 
+        db = get_db()
+        cursor = db.cursor()
+
+        cursor.execute("""
+            INSERT INTO clients (nom, prenom, email, password, adresse)
+            VALUES (%s, %s, %s, %s, %s)
+        """, (nom, prenom, email, password, adresse))
+
+        db.commit()
+        cursor.close()
+        db.close()
+
+        return redirect("/login")
+
+    return render_template("inscription.html")
 # PAGE COMMANDER
 @app.route("/client/<int:id_client>/commander", methods=["GET", "POST"])
 def commander(id_client):
