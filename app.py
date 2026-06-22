@@ -175,7 +175,62 @@ def commander(id_client):
         produits=produits,
         id_client=id_client
     )
+    @app.route("/panier/<int:id_client>")
+def panier(id_client):
 
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT produits.nom,
+               produits.prix,
+               panier.quantite
+
+        FROM panier
+
+        JOIN produits
+        ON produits.id = panier.id_produit
+
+        WHERE panier.id_client=%s
+    """,(id_client,))
+
+    produits = cursor.fetchall()
+
+    return render_template(
+        "panier.html",
+        produits=produits,
+        id_client=id_client
+    )
+@app.route("/ajouter_panier/<int:id_client>/<int:id_produit>")
+def ajouter_panier(id_client, id_produit):
+
+    db = get_db()
+    cursor = db.cursor()
+
+    cursor.execute("""
+        INSERT INTO panier(id_client,id_produit,quantite)
+        VALUES(%s,%s,%s)
+    """, (id_client, id_produit, 1))
+
+    db.commit()
+
+    return redirect(f"/panier/{id_client}")
+@app.route("/paiement/<int:id_client>",
+           methods=["GET","POST"])
+def paiement(id_client):
+
+    if request.method == "POST":
+
+        nom = request.form["nom"]
+
+        return render_template(
+            "confirmation.html",
+            nom=nom
+        )
+
+    return render_template(
+        "paiement.html"
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

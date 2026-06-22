@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panier</title>
+</head>
+<body>
+
+<h1>Mon panier</h1>
+
+<table border="1">
+
+<tr>
+    <th>Produit</th>
+    <th>Prix</th>
+    <th>Quantité</th>
+</tr>
+
+{% for p in produits %}
+
+<tr>
+    <td>{{ p.nom }}</td>
+    <td>{{ p.prix }}</td>
+    <td>{{ p.quantite }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/paiement/{{ id_client }}">
+    Valider le panier
+</a>
+
+</body>
+</html>
