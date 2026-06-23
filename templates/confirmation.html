@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
 
 <h1>
@@ -7,8 +11,18 @@ Paiement validé
 </h1>
 
 <p>
-Merci pour votre commande.
+Merci {{ nom }}, votre paiement simulé a été accepté.
 </p>
+
+<p>Commande numéro : {{ id_commande }}</p>
+<p>Total payé : {{ total_panier }} €</p>
+<p>Carte utilisée : **** **** **** {{ carte }}</p>
+
+<a href="/client/{{ id_client }}">
+Retour espace client
+</a>
+
+<br><br>
 
 <a href="/">
 Retour accueil

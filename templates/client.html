@@ -1,40 +1,53 @@
+<!DOCTYPE html>
+<html>
 <head>
+    <title>Espace Client</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
-<h2>Espace Client</h2>
+<body>
 
-<a href="/">Se déconnecter</a>
+<h1>Espace Client</h1>
 
-<h3>Mes produits achetés</h3>
+{% if client %}
+    <h2>Bonjour {{ client.prenom }} {{ client.nom }}</h2>
+{% endif %}
+
+<nav>
+    <a href="/">Accueil</a>
+    <a href="/panier/{{ id_client }}">Voir mon panier</a>
+    <a href="/">Se déconnecter</a>
+</nav>
+
+<hr>
+
+<h2>Nos produits</h2>
 
 <table border="1">
     <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-        <th>Password</th>
-        <th>Produit</th>
+        <th>Nom du produit</th>
         <th>Prix</th>
-        <th>Quantité</th>
+        <th>Stock</th>
+        <th>Action</th>
     </tr>
 
-    {% for p in produits %}
+    {% for produit in produits %}
     <tr>
-        <td>{{ p.nom }}</td>
-        <td>{{ p.nom }}</td>
-        <td>{{ p.prix }}</td>
-        <td>{{ p.quantite }}</td>
+        <td>{{ produit.nom }}</td>
+        <td>{{ produit.prix }} €</td>
+        <td>{{ produit.stock }}</td>
+        <td>
+            {% if produit.stock > 0 %}
+                <a href="/ajouter_panier/{{ id_client }}/{{ produit.id }}">
+                    Ajouter au panier
+                </a>
+            {% else %}
+                Rupture de stock
+            {% endif %}
+        </td>
     </tr>
     {% endfor %}
 </table>
-<br>
 
-<a href="/client/{{ id_client }}/commander">
-    Passer une commande
-</a>
-
-<br><br>
-
-<a href="/panier/{{ id_client }}">
-    Voir mon panier
-</a>
+</body>
+</html>

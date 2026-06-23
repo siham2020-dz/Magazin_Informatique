@@ -2,39 +2,52 @@
 <html>
 <head>
     <title>Paiement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
 <h1>Paiement</h1>
 
+<a href="/panier/{{ id_client }}">Retour au panier</a>
+
+{% if erreur %}
+    <p style="color:red;">{{ erreur }}</p>
+{% endif %}
+
+<h2>Total à payer : {{ total_panier }} €</h2>
+
+{% if produits %}
 <form method="POST">
 
     <label>Nom titulaire</label>
-    <input type="text" name="nom">
+    <input type="text" name="nom" required>
 
     <br><br>
 
     <label>Numéro carte</label>
-    <input type="text" name="numero">
+    <input type="text" name="numero" maxlength="19" placeholder="1111 2222 3333 4444" required>
 
     <br><br>
 
     <label>Date expiration</label>
-    <input type="text" name="expiration">
+    <input type="text" name="expiration" placeholder="MM/AA" required>
 
     <br><br>
 
     <label>CVV</label>
-    <input type="text" name="cvv">
+    <input type="text" name="cvv" maxlength="4" required>
 
     <br><br>
 
     <button type="submit">
-        Payer
+        Valider le paiement
     </button>
 
 </form>
+{% else %}
+<p>Impossible de payer : votre panier est vide.</p>
+{% endif %}
 
 </body>
 </html>
